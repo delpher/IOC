@@ -1,21 +1,21 @@
 function Container() {
     var self = this;
-    var instances = {};
-    var factories = {};
+    var registrations = {};
 
     self.registerInstance = function(name, instance) {
-        instances[name] = instance;
+        registrations[name] = {
+            resolve: function() { return instance; }
+        };
     };
 
     self.registerFactory = function(name, factory) {
-        factories[name] = factory;
+        registrations[name] = {
+            resolve: function() { return factory(self); }
+        };
     };
 
     self.resolve = function(name) {
-        if (instances[name])
-            return instances[name];
-
-        if (factories[name])
-            return factories[name](self);
+        var registration = registrations[name];
+        return registration.resolve();
     };
 }
