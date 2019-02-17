@@ -38,8 +38,9 @@ function Container(parentContainer) {
         var registration = registrations[name];
 
         if (registration) return registration.resolve();
+        if (parentContainer) return parentContainer.resolve(name);
 
-        return parentContainer.resolve(name);
+        throw new Error('Missing registration for: \'' + name + '\'');
     };
 }
 

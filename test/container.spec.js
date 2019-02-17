@@ -93,6 +93,11 @@ describe('Container', function () {
         expect(childOfChildContainer.resolve('name3')).toBe(instance3);
     });
 
+    it('should throw if no registration', function () {
+        expect(function() { container.resolve('not registered'); })
+            .toThrowError('Missing registration for: \'not registered\'');
+    });
+
     // satisfy imports no dependencies
 
     // satisfy imports with dependencies
