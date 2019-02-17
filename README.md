@@ -61,13 +61,19 @@ container.resolve('my-class');
 
 ### Hierarchical containers
 ```javascript
-function MyClass() {}
+function ClassA() {}
+function ClassB() {}
 
-var container = new Container();
-container.registerType('my-class', MyClass);
+var parent = new Container();
+parent.registerType('a-class', ClassA);
 
-var child = container.createChild();
-var myClass = child.resolve('my-class');
+var child = parent.createChild();
+child.registerType('b-class', ClassB);
+
+var myClass = child.resolve('a-class');
+var myClass = child.resolve('b-class');
+
+parent.resolve('b-class'); // <-- throws error
 ```
 
 ### Recursive resolution
