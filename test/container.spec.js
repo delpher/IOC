@@ -110,27 +110,43 @@ describe('Container', function () {
         expect(container.satisfyImports(ClientClass)).toBe(ClientClass);
     });
 
-    it('should satisfy imports with dependencies', function () {
-        var service1 = {id: 'svc1'};
-        var service2 = {id: 'svc2'};
-        var service3 = {id: 'svc3'};
+    it('should satisfy imports with dependencies', function (done) {
+        var service1 = {};
+        var service2 = {};
+        var service3 = {};
 
         function ClientClass(svc1, svc2, svc3) {
             expect(svc1).toBe(service1);
             expect(svc2).toBe(service2);
             expect(svc3).toBe(service3);
+            done();
         }
 
-        ClientClass.$imports = ['Service1', 'Service2', 'Service3'];
+        ClientClass.$imports = ['service1', 'service2', 'service3'];
 
-        container.registerInstance('Service1', service1);
-        container.registerInstance('Service2', service2);
-        container.registerInstance('Service3', service3);
+        container.registerInstance('service1', service1);
+        container.registerInstance('service2', service2);
+        container.registerInstance('service3', service3);
 
         var ClientClassConstructor = container.satisfyImports(ClientClass);
 
         new ClientClassConstructor();
     });
 
-    // resolve dependencies recursively
+
+    it('should resolve dependencies recursively', function (done) {
+        var service = {};
+
+        function ClientClass(svc) {
+            expect(svc).toBe(service);
+            done();
+        }
+
+        ClientClass.$imports = ['service'];
+
+        container.registerInstance('service', service);
+        container.registerType('name', ClientClass);
+
+        container.resolve('name');
+    });
 });

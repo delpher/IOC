@@ -25,7 +25,8 @@ function Container(parentContainer) {
 
         registrations[name] = new LifeTime({
             resolve: function () {
-                return new constructor();
+                var ctor = self.satisfyImports(constructor);
+                return new ctor();
             }
         });
     };
