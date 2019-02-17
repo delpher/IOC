@@ -5,7 +5,7 @@ npm i ioc-container-js
 
 ```javascript
 //Node.js
-const Container = require("container");
+var Container = require('ioc-container-js')
 var container = new Container();
 
 //Javascript
