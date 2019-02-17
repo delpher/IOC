@@ -1,8 +1,8 @@
-describe('Container', function() {
+describe('Container', function () {
     var container;
 
-    beforeEach(function() {
-       container = new Container();
+    beforeEach(function () {
+        container = new Container();
     });
 
     it('should resolve instance from instance registration', function () {
@@ -14,7 +14,7 @@ describe('Container', function() {
     it('should resolve instance from factory registration', function () {
         var instance = {};
 
-        var factory = function(c) {
+        var factory = function (c) {
             expect(c).toBe(container);
             return instance;
         };
@@ -25,7 +25,9 @@ describe('Container', function() {
     });
 
     it('should resolve instance from constructor registration', function (done) {
-        function Constructor() { done(); }
+        function Constructor() {
+            done();
+        }
 
         container.registerType('name', Constructor);
 
@@ -33,7 +35,16 @@ describe('Container', function() {
         expect(typeof instance).toBe('object');
     });
 
-    // resolve singleton from instance registration
+    it('should resolve singleton from instance registration', function () {
+        var instance = {};
+        container.registerInstance('name', instance, Container.Singleton);
+
+        var instance1 = container.resolve('name');
+        var instance2 = container.resolve('name');
+
+        expect(instance1).toBe(instance);
+        expect(instance2).toBe(instance);
+    });
 
     // resolve singleton from factory registration
 

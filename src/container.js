@@ -2,26 +2,34 @@ function Container() {
     var self = this;
     var registrations = {};
 
-    self.registerInstance = function(name, instance) {
+    self.registerInstance = function (name, instance) {
         registrations[name] = {
-            resolve: function() { return instance; }
+            resolve: function () {
+                return instance;
+            }
         };
     };
 
-    self.registerFactory = function(name, factory) {
+    self.registerFactory = function (name, factory) {
         registrations[name] = {
-            resolve: function() { return factory(self); }
+            resolve: function () {
+                return factory(self);
+            }
         };
     };
 
-    self.registerType = function(name, constructor) {
+    self.registerType = function (name, constructor) {
         registrations[name] = {
-            resolve: function() { return new constructor(); }
+            resolve: function () {
+                return new constructor();
+            }
         }
     };
 
-    self.resolve = function(name) {
+    self.resolve = function (name) {
         var registration = registrations[name];
         return registration.resolve();
     };
 }
+
+Container.Singleton = function () {};
