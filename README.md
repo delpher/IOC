@@ -70,8 +70,8 @@ parent.registerType('a-class', ClassA);
 var child = parent.createChild();
 child.registerType('b-class', ClassB);
 
-var myClass = child.resolve('a-class');
-var myClass = child.resolve('b-class');
+var a = child.resolve('a-class');
+var b = child.resolve('b-class');
 
 parent.resolve('b-class'); // <-- throws error
 ```
