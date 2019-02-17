@@ -75,11 +75,27 @@ describe('Container', function () {
         expect(invokedTimes).toBe(1);
     });
 
-    // resolve dependencies recursively
+    it('should resolve from parent container', function () {
+        var instance1 = {};
+        var instance2 = {};
+        var instance3 = {};
 
-    // resolve from child container
+        container.registerInstance('name1', instance1);
+
+        var childContainer = container.createChild();
+        childContainer.registerInstance('name2', instance2);
+
+        var childOfChildContainer = childContainer.createChild();
+        childOfChildContainer.registerInstance('name3', instance3);
+
+        expect(childOfChildContainer.resolve('name1')).toBe(instance1);
+        expect(childOfChildContainer.resolve('name2')).toBe(instance2);
+        expect(childOfChildContainer.resolve('name3')).toBe(instance3);
+    });
 
     // satisfy imports no dependencies
 
     // satisfy imports with dependencies
+
+    // resolve dependencies recursively
 });

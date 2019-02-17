@@ -1,4 +1,4 @@
-function Container() {
+function Container(parentContainer) {
     var self = this;
     var registrations = {};
 
@@ -11,7 +11,7 @@ function Container() {
     };
 
     self.registerFactory = function (name, factory, LifeTime) {
-        LifeTime = LifeTime || Container.Default;
+        LifeTime = LifeTime || Container.DefaultLifetime;
 
         registrations[name] = new LifeTime({
             resolve: function () {
@@ -21,7 +21,7 @@ function Container() {
     };
 
     self.registerType = function (name, constructor, LifeTime) {
-        LifeTime = LifeTime || Container.Default;
+        LifeTime = LifeTime || Container.DefaultLifetime;
 
         registrations[name] = new LifeTime({
             resolve: function () {
@@ -30,13 +30,20 @@ function Container() {
         });
     };
 
+    self.createChild = function() {
+        return new Container(self)
+    };
+
     self.resolve = function (name) {
         var registration = registrations[name];
-        return registration.resolve();
+
+        if (registration) return registration.resolve();
+
+        return parentContainer.resolve(name);
     };
 }
 
-Container.Default = function (registration) {
+Container.DefaultLifetime = function (registration) {
     this.resolve = function () {
         return registration.resolve();
     }
