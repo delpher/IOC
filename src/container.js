@@ -36,12 +36,16 @@ function Container(parentContainer) {
 
     self.resolve = function (name) {
         var registration = registrations[name];
-
         if (registration) return registration.resolve();
+
         if (parentContainer) return parentContainer.resolve(name);
 
         throw new Error('Missing registration for: \'' + name + '\'');
     };
+
+    self.satisfyImports = function(constructor) {
+        return constructor;
+    }
 }
 
 Container.DefaultLifetime = function (registration) {

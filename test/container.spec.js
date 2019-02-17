@@ -98,7 +98,11 @@ describe('Container', function () {
             .toThrowError('Missing registration for: \'not registered\'');
     });
 
-    // satisfy imports no dependencies
+    it('should satisfy imports with no dependencies', function () {
+        function ClientClass() {}
+
+        expect(container.satisfyImports(ClientClass)).toBe(ClientClass);
+    });
 
     // satisfy imports with dependencies
 
