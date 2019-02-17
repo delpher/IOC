@@ -1,0 +1,32 @@
+{
+  "name": "ioc-container-js",
+  "version": "1.0.0",
+  "description": "IOC DI Container with synchronous API",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/delpher/IOC.git"
+  },
+  "keywords": [
+    "IOC",
+    "DI"
+  ],
+  "author": "Delph.ER",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/delpher/IOC/issues"
+  },
+  "homepage": "https://github.com/delpher/IOC#readme",
+  "devDependencies": {
+    "karma": "^4.0.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-ie-launcher": "^1.0.0",
+    "karma-jasmine": "^2.0.1"
+  }
+}
