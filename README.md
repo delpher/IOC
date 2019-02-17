@@ -1,5 +1,21 @@
 # DI Container
 A simple and lightweight DI container for JavaScript.
+## Getting started
+npm i ioc-container-js
+
+```javascript
+//Node.js
+const Container = require("container");
+var container = new Container();
+
+//Javascript
+var container = new Container();
+
+// Javascript AMD
+define(['container'], function(Container) {
+  var container = new Container();
+});
+```
 
 ## Major features
 - Resolving from instance
