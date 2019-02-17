@@ -3,8 +3,8 @@ A simple and lightweight DI container for JavaScript.
 ## Getting started
 ```npm i ioc-container-js```
 
+### Node
 ```javascript
-//Node.js
 const Container = require('ioc-container-js')
 const container = new Container();
 
@@ -21,11 +21,14 @@ container.registerType('service', Service);
 container.registerType('class', MyClass);
 
 var my = container.resolve('class');
+```
 
-//Javascript
+### Javascript
+```javascript
+// Plain
 var container = new Container();
 
-// Javascript AMD
+// AMD
 define(['container'], function(Container) {
   var container = new Container();
 });
