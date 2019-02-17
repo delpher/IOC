@@ -7,11 +7,22 @@ describe('Container', function() {
 
     it('should resolve instance from instance registration', function () {
         var instance = {};
-        container.registerInstance('Name', instance);
-        expect(container.resolve('Name')).toBe(instance);
+        container.registerInstance('name', instance);
+        expect(container.resolve('name')).toBe(instance);
     });
 
-    // resolve instance from factory registration
+    it('should resolve instance from factory registration', function () {
+        var instance = {};
+
+        var factory = function(c) {
+            expect(c).toBe(container);
+            return instance;
+        };
+
+        container.registerFactory('name', factory);
+
+        expect(container.resolve('name')).toBe(instance);
+    });
 
     // resolve instance from constructor registration
 
