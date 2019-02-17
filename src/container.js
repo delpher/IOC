@@ -44,7 +44,11 @@ function Container(parentContainer) {
     };
 
     self.satisfyImports = function(constructor) {
-        return constructor;
+        if (!constructor.$imports) return constructor;
+
+        var arguments = constructor.$imports.map(self.resolve);
+        arguments.unshift({});
+        return constructor.bind.apply(constructor, arguments);
     }
 }
 

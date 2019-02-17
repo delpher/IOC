@@ -64,7 +64,10 @@ describe('Container', function () {
 
     it('should resolve singleton from constructor registration', function () {
         var invokedTimes = 0;
-        function MyClass() { invokedTimes++; }
+
+        function MyClass() {
+            invokedTimes++;
+        }
 
         container.registerType('name', MyClass, Container.Singleton);
 
@@ -94,17 +97,40 @@ describe('Container', function () {
     });
 
     it('should throw if no registration', function () {
-        expect(function() { container.resolve('not registered'); })
+        expect(function () {
+            container.resolve('not registered');
+        })
             .toThrowError('Missing registration for: \'not registered\'');
     });
 
     it('should satisfy imports with no dependencies', function () {
-        function ClientClass() {}
+        function ClientClass() {
+        }
 
         expect(container.satisfyImports(ClientClass)).toBe(ClientClass);
     });
 
-    // satisfy imports with dependencies
+    it('should satisfy imports with dependencies', function () {
+        var service1 = {id: 'svc1'};
+        var service2 = {id: 'svc2'};
+        var service3 = {id: 'svc3'};
+
+        function ClientClass(svc1, svc2, svc3) {
+            expect(svc1).toBe(service1);
+            expect(svc2).toBe(service2);
+            expect(svc3).toBe(service3);
+        }
+
+        ClientClass.$imports = ['Service1', 'Service2', 'Service3'];
+
+        container.registerInstance('Service1', service1);
+        container.registerInstance('Service2', service2);
+        container.registerInstance('Service3', service3);
+
+        var ClientClassConstructor = container.satisfyImports(ClientClass);
+
+        new ClientClassConstructor();
+    });
 
     // resolve dependencies recursively
 });
