@@ -2,9 +2,9 @@
 This is simple and lightweight DI container for JavaScript
 
 ## Major features
-- Resolving by instance
-- Resolving by factory
-- Resolving by constructor
+- Resolving from instance
+- Resolving from factory
+- Resolving from constructor
 - Singletons
 - Hierarchical containers
 - Recursive dependency resolution
