@@ -46,7 +46,21 @@ describe('Container', function () {
         expect(instance2).toBe(instance);
     });
 
-    // resolve singleton from factory registration
+    it('should resolve singleton from factory registration', function () {
+        var instance = {};
+
+        var factory = jasmine.createSpy('factory');
+        factory.and.returnValue(instance);
+
+        container.registerFactory('name', factory, Container.Singleton);
+
+        var instance1 = container.resolve('name');
+        var instance2 = container.resolve('name');
+
+        expect(instance1).toBe(instance);
+        expect(instance2).toBe(instance);
+        expect(factory).toHaveBeenCalledTimes(1);
+    });
 
     // resolve singleton from constructor registration
 

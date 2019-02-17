@@ -10,12 +10,14 @@ function Container() {
         };
     };
 
-    self.registerFactory = function (name, factory) {
-        registrations[name] = {
+    self.registerFactory = function (name, factory, LifeTime) {
+        LifeTime = LifeTime || Container.Default;
+
+        registrations[name] = new LifeTime({
             resolve: function () {
                 return factory(self);
             }
-        };
+        });
     };
 
     self.registerType = function (name, constructor) {
@@ -32,4 +34,17 @@ function Container() {
     };
 }
 
-Container.Singleton = function () {};
+Container.Default = function (registration) {
+    this.resolve = function () {
+        return registration.resolve();
+    }
+};
+
+Container.Singleton = function (registration) {
+    var instance = null;
+
+    this.resolve = function () {
+        if (instance) return instance;
+        return (instance = registration.resolve());
+    }
+};
