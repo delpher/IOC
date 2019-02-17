@@ -5,8 +5,22 @@ A simple and lightweight DI container for JavaScript.
 
 ```javascript
 //Node.js
-var Container = require('ioc-container-js')
-var container = new Container();
+const Container = require('ioc-container-js')
+const container = new Container();
+
+class MyClass { 
+  constructor(service) { 
+    this.service = service; 
+  }
+}
+MyClass.$imports = ['service'];
+
+class Service { }
+
+container.registerType('service', Service);
+container.registerType('class', MyClass);
+
+var my = container.resolve('class');
 
 //Javascript
 var container = new Container();
