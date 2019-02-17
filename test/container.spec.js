@@ -1,10 +1,15 @@
 describe('Container', function() {
+    var container;
 
-    it('should be defined', function() {
-        expect(Container).toBeDefined();
+    beforeEach(function() {
+       container = new Container();
     });
 
-    // resolve instance from instance registration
+    it('should resolve instance from instance registration', function () {
+        var instance = {};
+        container.registerInstance('Name', instance);
+        expect(container.resolve('Name')).toBe(instance);
+    });
 
     // resolve instance from factory registration
 
