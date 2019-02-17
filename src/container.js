@@ -20,12 +20,14 @@ function Container() {
         });
     };
 
-    self.registerType = function (name, constructor) {
-        registrations[name] = {
+    self.registerType = function (name, constructor, LifeTime) {
+        LifeTime = LifeTime || Container.Default;
+
+        registrations[name] = new LifeTime({
             resolve: function () {
                 return new constructor();
             }
-        }
+        });
     };
 
     self.resolve = function (name) {

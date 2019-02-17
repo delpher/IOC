@@ -62,7 +62,18 @@ describe('Container', function () {
         expect(factory).toHaveBeenCalledTimes(1);
     });
 
-    // resolve singleton from constructor registration
+    it('should resolve singleton from constructor registration', function () {
+        var invokedTimes = 0;
+        function MyClass() { invokedTimes++; }
+
+        container.registerType('name', MyClass, Container.Singleton);
+
+        var instance1 = container.resolve('name');
+        var instance2 = container.resolve('name');
+
+        expect(instance1).toBe(instance2);
+        expect(invokedTimes).toBe(1);
+    });
 
     // resolve dependencies recursively
 
