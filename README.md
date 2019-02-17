@@ -84,22 +84,7 @@ var container = new Container();
 
 container.registerType('service', Service);
 container.registerType('client', Client);
+container.registerType('client-of-client', ClientOfClient);
 
-var clientOfClient = container.resolve(ClientOfClient);
-```
-
-### Resolve by constructor with arguments
-```javascript
-function Repository() {}
-function Service() {}
-
-function Person(repo, svc, firstName, lastName) {}
-Person.$imports = ['repository', 'service'];
-
-var container = new Container();
-
-container.registerType('repository', Repository);
-container.registerType('service', Service);
-
-var person = container.resolve(Person, 'John', 'Smith');
+var clientOfClient = container.resolve('client-of-client');
 ```
