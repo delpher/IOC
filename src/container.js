@@ -25,7 +25,7 @@ function Container(parentContainer) {
 
         registrations[name] = new LifeTime({
             resolve: function () {
-                var ctor = self.satisfyImports(constructor);
+                var ctor = satisfyImports(constructor);
                 return new ctor();
             }
         });
@@ -35,21 +35,36 @@ function Container(parentContainer) {
         return new Container(self)
     };
 
-    self.resolve = function (name) {
+    self.resolve = function(what) {
+        if (typeof what === 'string') return resolveByName(what);
+        if (typeof what === 'function') return resolveByType(what, arguments);
+
+        throw new Error('Can not call resolve with object, ' +
+            'must be name or constructor');
+    };
+
+    function resolveByName(name) {
         var registration = registrations[name];
         if (registration) return registration.resolve();
 
         if (parentContainer) return parentContainer.resolve(name);
 
         throw new Error('Missing registration for: \'' + name + '\'');
-    };
+    }
 
-    self.satisfyImports = function(constructor) {
+    function resolveByType(constructor, args) {
+        var withImports = satisfyImports(constructor);
+        args = Array.prototype.slice.call(args);
+        var withArgs = withImports.bind.apply(withImports, args);
+        return new withArgs();
+    }
+
+    function satisfyImports(constructor) {
         if (!constructor.$imports) return constructor;
 
-        var arguments = constructor.$imports.map(self.resolve);
-        arguments.unshift({});
-        return constructor.bind.apply(constructor, arguments);
+        var resolvedImports = constructor.$imports.map(self.resolve);
+        resolvedImports.unshift({});
+        return constructor.bind.apply(constructor, resolvedImports);
     }
 }
 

@@ -103,14 +103,19 @@ describe('Container', function () {
             .toThrowError('Missing registration for: \'not registered\'');
     });
 
-    it('should satisfy imports with no dependencies', function () {
+    it('should resolve by constructor with no dependencies', function () {
+        var invoked = false;
+
         function ClientClass() {
+            invoked = true;
         }
 
-        expect(container.satisfyImports(ClientClass)).toBe(ClientClass);
+        container.resolve(ClientClass);
+
+        expect(invoked).toBe(true);
     });
 
-    it('should satisfy imports with dependencies', function (done) {
+    it('should resolve by constructor with dependencies', function (done) {
         var service1 = {};
         var service2 = {};
         var service3 = {};
@@ -128,11 +133,35 @@ describe('Container', function () {
         container.registerInstance('service2', service2);
         container.registerInstance('service3', service3);
 
-        var ClientClassConstructor = container.satisfyImports(ClientClass);
-
-        new ClientClassConstructor();
+        container.resolve(ClientClass);
     });
 
+    it('should resolve by constructor with arguments', function () {
+        var service = {};
+
+        function Person(svc, firstName, lastName) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.svc = svc;
+        }
+
+        Person.$imports = ['service'];
+
+        container.registerInstance('service', service);
+
+        var person = container.resolve(Person, 'first name', 'last name');
+
+        expect(person.firstName).toBe('first name');
+        expect(person.lastName).toBe('last name');
+        expect(person.svc).toBe(service);
+    });
+
+    it('should throw if neither constructor nor name given to resolve', function () {
+        expect(function () {
+            container.resolve({})
+        })
+            .toThrowError('Can not call resolve with object, must be name or constructor');
+    });
 
     it('should resolve dependencies recursively', function (done) {
         var service = {};
@@ -144,9 +173,14 @@ describe('Container', function () {
 
         ClientClass.$imports = ['service'];
 
-        container.registerInstance('service', service);
-        container.registerType('name', ClientClass);
+        function ClientOfClientClass(client) {
+        }
 
-        container.resolve('name');
+        ClientOfClientClass.$imports = ['client'];
+
+        container.registerInstance('service', service);
+        container.registerType('client', ClientClass);
+
+        container.resolve(ClientOfClientClass);
     });
 });

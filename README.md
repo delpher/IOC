@@ -25,7 +25,7 @@ container.resolve('my-class');
 ```javascript
 function MyClass() {}
 var container = new Container();
-var factory = function(cntnr) { return new MyClass(); }
+var factory = function(container) { return new MyClass(); };
 
 container.registerFactory('my-class', factory);
 container.resolve('my-class');
@@ -44,7 +44,7 @@ container.resolve('my-class');
 ```javascript
 function MyClass() {}
 var container = new Container();
-var factory = function(cntnr) { return new MyClass(); }
+var factory = function(container) { return new MyClass(); };
 
 container.registerFactory('my-class', factory, Container.Singleton);
 container.resolve('my-class');
@@ -69,9 +69,8 @@ container.registerType('my-class', MyClass);
 var child = container.createChild();
 var myClass = child.resolve('my-class');
 ```
-### Satisfy imports
-Converts provided constructor into constructor
-with filled in arguments
+
+### Recursive resolution
 ```javascript
 function Service() {}
 
@@ -86,6 +85,21 @@ var container = new Container();
 container.registerType('service', Service);
 container.registerType('client', Client);
 
-var ctor = container.satisfyImports(ClientOfClient);
-var clientOfClient = new ctor();
+var clientOfClient = container.resolve(ClientOfClient);
+```
+
+### Resolve by constructor with arguments
+```javascript
+function Repository() {}
+function Service() {}
+
+function Person(repo, svc, firstName, lastName) {}
+Person.$imports = ['repository', 'service'];
+
+var container = new Container();
+
+container.registerType('repository', Repository);
+container.registerType('service', Service);
+
+var person = container.resolve(Person, 'John', 'Smith');
 ```
