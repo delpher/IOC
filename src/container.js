@@ -14,6 +14,12 @@ function Container() {
         };
     };
 
+    self.registerType = function(name, constructor) {
+        registrations[name] = {
+            resolve: function() { return new constructor(); }
+        }
+    };
+
     self.resolve = function(name) {
         var registration = registrations[name];
         return registration.resolve();

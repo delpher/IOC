@@ -24,7 +24,14 @@ describe('Container', function() {
         expect(container.resolve('name')).toBe(instance);
     });
 
-    // resolve instance from constructor registration
+    it('should resolve instance from constructor registration', function (done) {
+        function Constructor() { done(); }
+
+        container.registerType('name', Constructor);
+
+        var instance = container.resolve('name');
+        expect(typeof instance).toBe('object');
+    });
 
     // resolve singleton from instance registration
 
