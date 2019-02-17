@@ -1,7 +1,7 @@
 # DI Container
 A simple and lightweight DI container for JavaScript.
 ## Getting started
-> npm i ioc-container-js
+```npm i ioc-container-js```
 
 ```javascript
 //Node.js
