@@ -1,5 +1,5 @@
 # DI Container
-This is simple and lightweight DI container for JavaScript
+A simple and lightweight DI container for JavaScript.
 
 ## Major features
 - Resolving from instance
