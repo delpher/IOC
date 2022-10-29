@@ -25,7 +25,7 @@
   "homepage": "https://github.com/delpher/IOC#readme",
   "devDependencies": {
     "jasmine": "^3.3.1",
-    "karma": "^4.0.0",
+    "karma": "^6.4.1",
     "karma-chrome-launcher": "^2.2.0",
     "karma-ie-launcher": "^1.0.0",
     "karma-jasmine": "^2.0.1",
