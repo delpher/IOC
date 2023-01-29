@@ -97,7 +97,7 @@
                         const dependencyName = resolveDependencyName(overrides, dependency);
                         return self.resolve(dependencyName);
                     } catch (error) {
-                        throw "Error while resolving \'" + constructor + "\': \'" + error + "\'";
+                        throw "Error while resolving '" + constructor + "': '" + error + "'";
                     }
                 });
 
