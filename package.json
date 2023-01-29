@@ -2,7 +2,7 @@
   "name": "ioc-container-js",
   "version": "1.0.0",
   "description": "IOC DI Container with synchronous API",
-  "main": "index.js",
+  "main": "src/container.js",
   "directories": {
     "test": "test"
   },
@@ -24,12 +24,14 @@
   },
   "homepage": "https://github.com/delpher/IOC#readme",
   "devDependencies": {
-    "jasmine": "^3.3.1",
-    "karma": "^4.0.0",
-    "karma-chrome-launcher": "^2.2.0",
+    "chai-jasmine": "^2.0.6",
+    "jasmine": "^4.5.0",
+    "karma": "^6.4.1",
+    "karma-chrome-launcher": "^3.1.1",
     "karma-ie-launcher": "^1.0.0",
-    "karma-jasmine": "^2.0.1",
+    "karma-jasmine": "^5.1.0",
     "karma-requirejs": "^1.1.0",
+    "mocha": "^10.2.0",
     "requirejs": "^2.3.6"
   }
 }

@@ -1,4 +1,4 @@
-define(['src/container'], function(Container) {
+define(['../src/container'], function(Container) {
 
    describe('Container UMD module', function() {
 

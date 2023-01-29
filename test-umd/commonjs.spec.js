@@ -1,3 +1,2 @@
-global.Container = require('../src/container');
-require('../test/container.spec');
-
+global.Container = require('../src/container.js');
+require('../test/container.spec.mjs');
